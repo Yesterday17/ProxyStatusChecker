@@ -6,6 +6,9 @@
   "repository": "https://github.com/Yesterday17/ProxyStatusChecker.git",
   "author": "Yesterday17 <t@yesterday17.cn>",
   "license": "MIT",
+  "scripts": {
+    "start": "node server.js"
+  },
   "dependencies": {
     "ping": "^0.2.2",
     "tcp-ping": "^0.1.1"
