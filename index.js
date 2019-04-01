@@ -23,19 +23,32 @@ module.exports = function(ip, tcports, cb_pingd) {
 
   function tcp_ping(port) {
     tcping.ping(
-      { address: ip, port: port, attempts: 2, timeout: 1000 },
+      { address: ip, port: port, attempts: 5, timeout: 2000 },
       (err, pr) => {
         if (err) {
           result.ports[port.toString()] = {
             ping: false,
-            avg: NaN
+            avg: null
           };
           console.err(err);
           return;
         }
+
         result.ports[port.toString()] = {
-          ping: !isNaN(pr.avg),
-          avg: pr.avg.toFixed(2)
+          ping: !isNaN(pr.avg) || !isNaN(pr.max) || !isNaN(pr.min),
+          avg: isNaN(pr.avg)
+            ? (rpt => {
+                let ans = 0,
+                  c = 0;
+                for (const i of rpt.results) {
+                  if (!isNaN(i.time)) {
+                    ans += i.time;
+                    c++;
+                  }
+                }
+                return ans / c;
+              })(pr)
+            : pr.avg
         };
       }
     );

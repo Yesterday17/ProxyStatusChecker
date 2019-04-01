@@ -6,9 +6,10 @@ WORKDIR /home/ProxyStatusChecker
 
 COPY . /home/ProxyStatusChecker
 
-RUN npm install
+RUN npm install -g -s --no-progress yarn
+RUN yarn
 
 # Expose port 8080 to host 
 EXPOSE 8080
 
-CMD [ "npm", "start" ]
+CMD [ "yarn", "start" ]
