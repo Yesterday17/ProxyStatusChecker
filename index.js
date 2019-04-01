@@ -28,14 +28,14 @@ module.exports = function(ip, tcports, cb_pingd) {
         if (err) {
           result.ports[port.toString()] = {
             ping: false,
-            avg: null
+            avg: NaN
           };
           console.err(err);
           return;
         }
 
         result.ports[port.toString()] = {
-          ping: !isNaN(pr.avg) || !isNaN(pr.max) || !isNaN(pr.min),
+          ping: false,
           avg: isNaN(pr.avg)
             ? (rpt => {
                 let ans = 0,
@@ -46,10 +46,16 @@ module.exports = function(ip, tcports, cb_pingd) {
                     c++;
                   }
                 }
-                return ans / c;
+                return (ans / c).toFixed(2);
               })(pr)
-            : pr.avg
+            : pr.avg.toFixed(2)
         };
+        if (
+          result.ports[port.toString()].avg !== null &&
+          !isNaN(result.ports[port.toString()].avg)
+        ) {
+          result.ports[port.toString()].ping = true;
+        }
       }
     );
   }

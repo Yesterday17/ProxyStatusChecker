@@ -1,6 +1,6 @@
 {
   "name": "proxy-status-checker",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Check status of a proxy server using ping, tcping & udping.",
   "main": "index.js",
   "repository": "https://github.com/Yesterday17/ProxyStatusChecker.git",
